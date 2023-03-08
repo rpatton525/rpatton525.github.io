@@ -1,0 +1,105 @@
+/* CSS Document */
+
+html,
+body {
+  background-image: url("../img/grass.jpg");
+  margin: 0 auto;
+  font-family: sans-serif;
+  font-size: 20px;
+  background-color: #00b300;
+}
+
+h1 {
+  margin: 2px;
+  font-family: "Silkscreen", sans-serif;
+  color: #d62828;
+  text-shadow: 1px 1px white;
+}
+
+#directions,
+#welcome,
+#score,
+#timer {
+  font-family: "Source Code Pro", sans-serif;
+}
+
+#directions,
+#welcome {
+  text-shadow: 1px 1px gray;
+}
+
+#score {
+  color: #d62828;
+  text-shadow: 1px 1px gray;
+}
+
+button {
+  padding: 8px;
+}
+
+#content {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#leftside {
+  background-color: #ccc;
+  border: 5px solid #000;
+  background-image: url(../img/grass_low.png), url(../img/ant_picnic.png);
+  background-repeat: repeat-x, no-repeat;
+  background-position: bottom left, bottom right;
+  background-size: 50%, 45%;
+}
+
+#gamespace {
+  background-image: url("../img/picnic.png");
+  background-size: cover;
+  margin: 20px;
+  height: 350px;
+  width: 600px;
+  background-color: #b30000;
+  border: 7px solid #ccc;
+  cursor: url("../img/bugSpray.png"), crosshair;
+}
+
+#timer {
+  background-color: rgba(148, 196, 77, 0.75);
+  text-shadow: 1px 1px gray;
+  margin-left: 20%;
+  margin-right: 20%;
+  border-radius: 43%;
+  display: none;
+}
+#ant {
+  width: 70px;
+}
+
+
+#scoreTimerStart {
+float: left;
+margin-left: 7%;
+}
+
+.col1 {
+  text-align: center;
+  width: 550px;
+  min-width: 400px;
+}
+
+@media only screen and (max-width: 900px) {
+  #content {
+    display: inline-block;
+  }
+  .col1 {
+    margin: 0 auto;
+  }
+}
+
+div#gamespace img {
+  position: absolute;
+}
+
+div#gamespace {
+  position: relative;
+}
