@@ -1,0 +1,185 @@
+<!-- 
+		Name: Rowan Patton
+		Date: 12/1/2022
+		Class: CSCI2447, Javascript Fundamentals
+ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ant Frenzy Game</title>
+    <link href="css/game.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Silkscreen"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Code+Pro"
+    />
+    <link rel="icon" type="image/x-icon" href = "img/favicon.png">
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="content">
+        <div id="leftside" class="col1">
+          <h1>Ant Frenzy</h1>
+
+          <p id="welcome"></p>
+
+          <p id="directions">
+            Ants are trying to ruin your picnic...click the ants before the
+            clock runs out to save your tasty treats!
+          </p>
+          <div id = "scoreTimerStart">
+            <p><span id="score">0 pts</span></p>
+            <div id="timer"><p>30 seconds left</p></div>
+          
+
+          <button type="button" id="start_button">Start!</button>
+          <br /><br /><br>
+          </div>
+        </div>
+
+        <div id="gamespace"></div>
+      </div>
+      <!--ends content div -->
+    </div>
+
+    <script src="jquery-3.6.1.min.js"></script>
+    <script>
+      let currentScore = 0;
+      let timeRemaining = 30;
+      //on page load, inserts footer, updates start button appearance, displays timer, 
+      $(document).ready(function () {
+        requestName();
+        $("#copyFooter").load("load.html");
+       
+
+        $("#start_button").css({
+          "font-size": "18px",
+          "font-family": '"Silkscreen", sans-serif',
+          color: "#d62828",
+          "text-shadow": "1px 1px black",
+          height: "12%",
+          width: "50%",
+          "background-color": "rgba(204,204,204,.8)",
+          "border-radius": "15%",
+        });
+       
+       
+        $("#timer").css("display", "block"); //makes timer visible once loaded
+
+        //when start button clicked, begin game, disable start button
+        $("#start_button").click(function () {
+          beginGame();
+          $("#start_button").prop('disabled', true);
+        });
+          
+          //when img clicked, increase score and hide clicked image
+          $("#gamespace").on("click", "img", function(){
+          scoreInc();
+          $(this).hide();
+          
+        
+        });
+     
+      });
+      //return X & Y coords to position new ant images on gamespace
+      function randomX() {
+        return Math.floor(Math.random() * 300);
+      }
+        
+
+      function randomY() {
+        return Math.floor(Math.random() * 535);
+      }
+      
+      //increases score and updates page
+      function scoreInc() {
+        currentScore += 1;
+        $("#score").html(`${currentScore} pts`);
+        
+      }
+
+      function beginGame(){
+        countdown();
+        addImage();
+            
+      }
+
+      //checks amount of time left on timer. Continues timer if not 0. otherwise stops game
+      function countdown() {
+        let t;
+       
+        if (timeRemaining < 0){
+          $(".formatImage").hide();
+          let alertText = `Game over! Thanks for playing! Final score: ${currentScore} points`
+          alert(alertText);
+          resetGame();
+          $("#start_button").prop('disabled', false);
+
+          clearTimeout(t);
+          clearTimeout(stopImage);
+          clearTimeout(hideImage);
+        
+        }
+        else {
+          t = setTimeout("countdown()", 1000);
+          $("#timer").html(`<p>${timeRemaining} seconds left</p>`);
+          timeRemaining--;
+          
+        }
+        
+      }
+
+let stopImage;
+let count = 0;
+let hideAnt;
+
+//Adds and removes images at random interval. Dynamically numbers each ant image added to gamespace
+      function addImage(){
+        let xPos = randomX();
+        let yPos = randomY();
+        let randTime = Math.floor(Math.random() * 2000);
+        let randHide = Math.random() * 4000;
+        let imgAnt = `<img src="img/brown_ant.png" class="formatImage" id="antImg${count}" style="left:${yPos}px; top:${xPos}px; width: 70px;" alt="Ant">`;
+        $("#gamespace").append(imgAnt);
+        stopImage = setTimeout("addImage()", randTime); 
+        
+        $("#antImg"+count).delay(Math.floor(Math.random() * 2000)).fadeOut();
+
+        count++;
+        
+      }
+
+      //Resets the game settings to allow user to start a new game
+      function resetGame(){
+        currentScore = 0;
+        timeRemaining = 30;
+        $("#score").html(`${currentScore} pts`);
+        $("#timer").html(`${timeRemaining} seconds left`);
+
+      }
+    
+//initial prompt when game starts
+      function requestName(){
+        let name = prompt("Please enter your name");
+        if (name) {
+          let para = document.getElementById("welcome");
+          para.innerHTML = `${name}, we have a big problem!`;
+        } else {
+          let para = document.getElementById("welcome");
+          para.innerHTML = `We have a big problem!`;
+        }
+
+      }
+
+     
+    </script>
+  </body>
+  <footer id="copyFooter">
+
+  </footer>
+</html>
